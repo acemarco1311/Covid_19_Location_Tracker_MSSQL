@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html  lang='en'>
+  <head>
+    <title>COVID-19 Tracker Website</title>
+    <meta charset="UTF-8">
+    <script src="https://use.fontawesome.com/9f47f376f1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/images/icon-task.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="javascripts/page.js"></script>
+          <script async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNYvzy_Wcuk-z1KH0O4kGYDHWuMuDJLKU&callback=mapWithHistory">
+        </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="634822058489-au87q3693f7olnpnmetj80khjtqkovn4.apps.googleusercontent.com">
+    <!--google login-->
+  </head>
+<body onload="getDangerousCheckIn(); mapWithHistory();">
+    <div id="show-history">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+        <a class="navbar-brand" href="https://www.adelaide.edu.au/">
+            <span><img src="images/brand-logo.png" alt="Logo" style="width:70px;">
+            COVID-19 Contact Tracing Project
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       	<span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto pr-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="/user-home-page.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="edit-history.html">Check-in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/see-hotspots.html">Current Hotspots</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/check-history.html">Check-in History</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="/manage-account.html">Edit account information</a>
+                      <a class="dropdown-item" href="/manage-account.html#changePassword">Change password</a>
+                      <!--<a class="dropdown-item" href="/setting.html">Setting</a>-->
+                      <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="javascript:void(0)" onclick="logout();">Log out</a>
+                      </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h1 class="page-header">Keep track of your locations</h1>
+    <div class="check-button-container">
+    <button style="cursor:pointer; border-radius: 0px; background-color: red; margin-bottom: 40px" type="button" id="check-button" v-on:click="getDangerous">
+      <i class="fa fa-exclamation-triangle" style="font-size:30px"></i>
+      Have I been to a hotspot?</button>
+    </div>
+
+    <div style="width: 100%; height: 600px;">
+        <div style="width: 30%; height: 100%; float: left; border: solid">
+          <div style="height: 42px; border-bottom: solid">
+            <h3 style="text-align: center">Check-in history</h3>
+            <div id="simplified-checkin-history">
+              <table>
+                <thead>
+                  <tr>
+                    <th>TIME</th>
+                    <th>LOCATION</th>
+                  </tr>
+                </thead>
+                <tbody id="history">
+                  <template>
+                    <tr v-for='record in checkInRecords'>
+                      <td>{{record.time}}</td>
+                      <td>{{record.venue}}</td>
+                    </tr>
+
+                  </template>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div id="map" style="width: 70%; height: 100%; float: right"></div>
+    </div>
+      <h2 style="text-align: center; margin-top: 50px">Dangerous check-in records</h2>
+      <div id="dangerous-checkin-records">
+              <table>
+                <thead>
+                  <tr>
+                    <th>TIME</th>
+                    <th>VENUE NAME</th>
+                    <th>STATE</th>
+                    <th>COUNTRY</th>
+                    <th>NEAR HOTSPOTS</th>
+                  </tr>
+                </thead>
+                <tbody id="dangerous-records">
+                  <template>
+                    <tr v-for="record in dangerousRecords">
+                      <td>{{record.time}}</td>
+                      <td>{{record.venue}}</td>
+                      <td>{{record.state}}</td>
+                      <td>{{record.country}}</td>
+                      <td><button type="button" v-on:click="showNearHotspots(record)">See near hotspots information</button></td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+
+
+<footer>
+  <div class="container-fluid" id="contact">
+    <div class="row">
+      <div class="col col-md-3 col-lg-3 col-12 order-1">
+          <div style="display: flex; align-items:center; justify-content: center">
+            <img src="images/brand-logo.png" alt="" style="width: 250px; height: 200px"/>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-2">
+          <div class="footer-text">
+              <h3 class="footer_title">ABOUT US</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Team</a>
+                <a class="nav-link" href="thelink">Course</a>
+                <a class="nav-link" href="thelink">Email</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-3">
+          <div class="footer-text">
+              <h3 class="footer_title">PRODUCT</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Terms of service</a>
+                <a class="nav-link" href="thelink">Privacy</a>
+                <a class="nav-link" href="thelink">Cookie Policy</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-4">
+          <div class="footer-text">
+              <h3 class="footer_title">CONTACT</h3>
+              <div class="footer-icon">
+                <a href="https://facebook.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf082;</i>
+                </a>
+                <a href="https://instagram.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf16d;</i>
+                </a>
+                <a href="https://twitter.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf099;</i>
+                </a>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <div class="g-signin2" style="display:none;"></div>
+</body>
+
+</html>

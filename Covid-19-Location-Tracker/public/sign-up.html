@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html  lang='en'>
+<head>
+    <title>COVID-19 Tracker Website</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <meta charset="UTF-8">
+    <script src="https://use.fontawesome.com/9f47f376f1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/images/icon-task.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
+    <script src="javascripts/page.js" defer></script>
+    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="634822058489-au87q3693f7olnpnmetj80khjtqkovn4.apps.googleusercontent.com">
+    <!--google login-->
+</head>
+
+<body>
+
+
+  <!--<div id="loading"></div>-->
+
+  <nav class="navbar  navbar-expand-sm navbar-light bg-light p-2">
+    <!--the navigation bar will be verticall on a small screen, use green backgroun color, small navigation bar-->
+      <a class="navbar-brand" href="https://www.adelaide.edu.au/" >
+        <span><img src="images/brand-logo.png" alt="Logo" style="width:70px;"></span>
+        COVID-19 Contact Tracing Project
+      </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          	<span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto pr-5">
+				<li class="nav-item">
+					<a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+				</li>
+			</ul>
+        </div>
+  </nav>
+
+
+
+
+  <div class="home">
+  <!--this div contain image on the left and information on the right-->
+      <div class="row function" id="main">
+        <div class="col col-md-5 col-lg-5 col-12 order-1">
+            <div class="lefside" id="show-image">
+              <img src="images/coronavirus.png" alt="" width="600" height="400"/>
+            </div>
+        </div>
+        <div class="col col-md-7 col-lg-7 col-12 order-2">
+            <div class="information">
+              <h1>Sign up and stay safe from Corona virus by keeping track of your locations!</h1>
+            </div>
+
+	<section class="h-100">
+    <div class="container h-100" style="margin-top: 50px; ">
+          <div class="row justify-content-md-center h-100" >
+              <div class="card-wrapper">
+            	    <div class="card fat">
+            			    <div class="card-body">
+            					    <h3 class="card-title" id="sign-up-all">Sign up</h3>
+                                  <div class="sign-up-form">
+                                      <div class="container-for-all">
+
+<div class="container-for-user">
+<button id="button-user" class="button" onclick="document.getElementById('button-click-user').style.display='block'">Sign up for user</button>
+</div>
+
+<div class="container-for-venue">
+<button id="button-venue" class="button" onclick="document.getElementById('button-click-venue').style.display='block'">Sign up for venue owner/manager</button>
+</div>
+
+<div class="container-for-admin">
+<button id="button-admin" class="button" onclick=clickAdmin()>Sign up for admin/health officer</button>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<div id="button-click-user" class="modal">
+  <span onclick="document.getElementById('button-click-user').style.display='none'" class="close" title="Close Modal">&times;</span>
+     <section class="h-100">
+         <div class="container h-100" style="margin-top: 50px; ">
+            <div class="row justify-content-md-center h-100" >
+                <div class="card-wrapper">
+  <form class="modal-content" action="/users/signup" method="POST">
+            					<div class="card fat">
+            						<div class="card-body">
+            							<h3 class="card-title" id="sign-up">Sign Up</h3>
+            							  <p>Please fill in this form to create an account.</p>
+            								<div class="form-group">
+            									<label for="userID">User ID: </label>
+            									<input id="userID" type="text" class="form-control" name="userID" value="" required>
+            								</div>
+
+            								<div class="form-group">
+            								    <label for="firstName">First Name: </label>
+            									<input id="firstName" type="text" class="form-control" name="firstName" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="lastName">Last Name: </label>
+            									<input id="lastName" type="text" class="form-control" name="lastName" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="email">Email: </label>
+            									<input id="email" type="text" class="form-control" name="email" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="addressNumber">Address Number: </label>
+            									<input id="addressNumber" type="text" class="form-control" name="addressNumber" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="streetName">Street Name: </label>
+            									<input id="streetName" type="text" class="form-control" name="streetName" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="city">City: </label>
+            									<input id="city" type="text" class="form-control" name="city" value="" required>
+            								</div>
+                            <div class="form-group">
+            								    <label for="stateName">State: </label>
+            									<input id="stateName" type="text" class="form-control" name="stateName" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="country">Country: </label>
+            									<input id="country" type="text" class="form-control" name="country" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="contactNumber">Contact Number: </label>
+            									<input id="contactNumber" type="text" class="form-control" name="contactNumber" value="" required>
+            								</div>
+
+
+            								<div class="form-group">
+            								    <label for="password">Password: </label>
+            									<input id="password" type="text" class="form-control" name="password" required data-eye>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="confirmPassword"> Confirm password: </label>
+            									<input id="confirmPassword" type="text" class="form-control" name="confirmPassword" required data-eye>
+            								</div>
+
+            								<div class="form-group">
+                                      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+                            </div>
+
+                            <div class="clearfix">
+                                <button type="button" onclick="document.getElementById('button-click-user').style.display='none'" class="cancel-button">Cancel</button>
+                                <button type="submit" class="signup-button">Sign Up</button>
+                            </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="button-click-venue" class="modal">
+  <span onclick="document.getElementById('button-click-venue').style.display='none'" class="close" title="Close Modal">&times;</span>
+     <section class="h-100">
+         <div class="container h-100" style="margin-top: 50px; ">
+            <div class="row justify-content-md-center h-100" >
+                <div class="card-wrapper">
+ <form class="modal-content" action="/users/signupVenue" method="POST">
+            					<div class="card fat">
+            						<div class="card-body">
+            							<h3 class="card-title" id="sign-up-venue">Sign Up</h3>
+            							  <p>Please fill in this form to create an account.</p>
+            								<div class="form-group">
+            									<label for="userIDVenue">User ID: </label>
+            									<input id="userIDVenue" type="text" class="form-control" name="userIDVenue" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="venueName">Venue Name: </label>
+            									<input id="venueName" type="text" class="form-control" name="venueName" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="emailVenue">Email: </label>
+            									<input id="emailVenue" type="text" class="form-control" name="emailVenue" value="" required>
+            								</div>
+
+                             <div class="form-group">
+            								    <label for="checkInCode">Check In Code: </label>
+            									<input id="checkInCode" type="text" class="form-control" name="checkInCode" value="" required>
+            								</div>
+
+                             <div class="form-group">
+            								    <label for="latitude">Latitude: </label>
+            									<input id="latitude" type="text" class="form-control" name="latitude" value="" required>
+            								</div>
+
+                             <div class="form-group">
+            								    <label for="longitude">Longtitude: </label>
+            									<input id="longitude" type="text" class="form-control" name="longitude" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="addressNumberVenue">Address Number: </label>
+            									<input id="addressNumberVenue" type="text" class="form-control" name="addressNumberVenue" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="streetNameVenue">Street Name: </label>
+            									<input id="streetNameVenue" type="text" class="form-control" name="streetNameVenue" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="cityVenue">City: </label>
+            									<input id="cityVenue" type="text" class="form-control" name="cityVenue" value="" required>
+            								</div>
+                            <div class="form-group">
+            								    <label for="stateNameVenue">State: </label>
+            									<input id="stateNameVenue" type="text" class="form-control" name="stateNameVenue" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="country">Country: </label>
+            									<input id="countryVenue" type="text" class="form-control" name="countryVenue" value="" required>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="contactNumberVenue">Contact Number: </label>
+            									<input id="contactNumberVenue" type="text" class="form-control" name="contactNumberVenue" value="" required>
+            								</div>
+
+
+            								<div class="form-group">
+            								    <label for="passwordVenue">Password: </label>
+            									<input id="passwordVenue" type="text" class="form-control" name="passwordVenue" required data-eye>
+            								</div>
+
+                            <div class="form-group">
+            								    <label for="confirmPasswordVenue"> Confirm password: </label>
+            									<input id="confirmPasswordVenue" type="text" class="form-control" name="confirmPasswordVenue" required data-eye>
+            								</div>
+
+            								<div class="form-group">
+                                      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+                            </div>
+
+                            <div class="clearfix">
+                                <button type="button" onclick="document.getElementById('button-click-venue').style.display='none'" class="cancel-button">Cancel</button>
+                                <button type="submit" class="signup-button">Sign Up</button>
+                            </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+<footer>
+  <div class="container-fluid" id="contact">
+    <div class="row">
+      <div class="col col-md-3 col-lg-3 col-12 order-1">
+          <div style="display: flex; align-items:center; justify-content: center">
+            <img src="images/brand-logo.png" alt="" style="width: 250px; height: 200px"/>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-2">
+          <div class="footer-text">
+              <h3 class="footer_title">ABOUT US</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Team</a>
+                <a class="nav-link" href="thelink">Course</a>
+                <a class="nav-link" href="thelink">Email</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-3">
+          <div class="footer-text">
+              <h3 class="footer_title">PRODUCT</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Terms of service</a>
+                <a class="nav-link" href="thelink">Privacy</a>
+                <a class="nav-link" href="thelink">Cookie Policy</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-4">
+          <div class="footer-text">
+              <h3 class="footer_title">CONTACT</h3>
+              <div class="footer-icon">
+                <a href="https://facebook.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf082;</i>
+                </a>
+                <a href="https://instagram.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf16d;</i>
+                </a>
+                <a href="https://twitter.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf099;</i>
+                </a>
+              </div>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <div class="g-signin2" style="display:none;"></div>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+
+</html>

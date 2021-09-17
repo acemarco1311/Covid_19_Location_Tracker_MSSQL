@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html  lang='en'>
+<head>
+    <title>COVID-19 Tracker Website</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <meta charset="UTF-8">
+    <script src="https://use.fontawesome.com/9f47f376f1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/images/icon-task.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
+    <script src="javascripts/page.js" defer></script>
+    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="634822058489-au87q3693f7olnpnmetj80khjtqkovn4.apps.googleusercontent.com">
+    <!--google login-->
+</head>
+<body onload="check_admin_account()">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+        <a class="navbar-brand" href="https://www.adelaide.edu.au/">
+            <span><img src="images/brand-logo.png" alt="Logo" style="width:70px;">
+            COVID-19 Contact Tracing Project
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       	<span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto pr-5">
+                <li class="nav-item">
+                    <a class="nav-link hover" href="/admin-home-page.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link hover" href="manage-venue-and-user.html">Users/Venues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover" href="/admin-manage-hotspot.html">Hotspots</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover" href="/user-check-in-history.html">Check-In Information</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle hover" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="/admin-manage-account.html">Edit account information</a>
+                      <a class="dropdown-item" href="/admin-manage-account.html#changePassword">Change password</a>
+                      <a class="dropdown-item" href="sign-up-another-admin.html">Sign up another admin</a>
+                      <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="/index.html">Log out</a>
+                      </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+  <div style="display:none;" id="none_admin" >
+      <h1 style="text-align:center; margin-top:300px;margin-bottom:300px">Access error! Only admins are authorised to visit this page!</h1>
+  </div>
+  <div id="info-card">
+    <div class="info-div">
+        <h1 style="text-align:center" id="h1">Filling the Information Card below to sign up another admin account</h1>
+        <div style="height:50px"></div>
+        <div style="display:none;" id="success" >
+          <h1 style="text-align:center; margin-top:300px">Sign up successfully!</h1>
+          <h2 style="text-align:center"><a href="/user-home-page.html">click here to return the main page!</a></h2>
+        </div>
+        <!--<div style="display:none;" id="none_admin" >-->
+        <!--  <h1 style="text-align:center; margin-top:300px">Access error! Only admins are authorised visit this page!</h1>-->
+        <!--</div>-->
+        <div class="info-card">
+            <p class="info-p">Information Card</p>
+            <div class="info-list-div">
+                <ul>
+                    <li class="info-each-list">User ID: </li>
+                    <li class="info-each-list">Email Address: </li>
+                    <li class="info-each-list">Official Name: </li>
+                    <li class="info-each-list">Password: </li>
+                    <!--<li class="info-each-list">Address No: </li>-->
+                    <!--<li class="info-each-list">City Name: </li>-->
+                    <!--<li class="info-each-list">Contact: </li>-->
+                </ul>
+            </div>
+            <div class="info-input-div">
+                <input type="text" class="form-control info-each-input" id="UserID">
+                <input type="text" class="form-control info-each-input" id="EmailAddress">
+                <input type="text" class="form-control info-each-input" id="OfficialName">
+                <input type="password" class="form-control info-each-input" id="Password">
+            </div>
+            <div style='float:left;width:20%'></div>
+            <div style="'float:left;height:50px;width:15%">
+              <button style="cursor:pointer;margin-top:255px;height:35px;width:55px;border-radius:8px" onclick="password_toggle()">show</button>
+            </div>
+            <div class="div-list1">
+                <ul>
+                    <li class="info-each-list" style="margin-top:25px">Address No: </li>
+                    <li class="info-each-list">City Name: </li>
+                </ul>
+            </div>
+            <div class="div-list2">
+                <input type="text" class="form-control first-input-list" id="AddressNo">
+                <input type="text" class="form-control each-input-list" id="CityName">
+            </div>
+            <div class="div-list3">
+              <ul>
+                <li class="info-each-list" style="margin-top:25px;margin-left:5px">Street: </li>
+                <li class="info-each-list" style="margin-left:5px">Country: </li>
+              </ul>
+            </div>
+            <div class="div-list4">
+                <input type="text" class="form-control first-input-list" id="Street">
+                <input type="text" class="form-control each-input-list" id="Country">
+            </div>
+            <div class="card-bottom-list-div">
+              <ul>
+                <li class="info-each-list" style="margin-top:20px">State Name: </li>
+              </ul>
+            </div>
+            <div class="card-bottom-input-div">
+                <input type="text" class="form-control info-each-input" id="stateName" style="margin-top:25px;width:64%">
+            </div>
+                 <div class="card-bottom-list-div">
+              <ul>
+                <li class="info-each-list" style="margin-top:20px">Contact: </li>
+              </ul>
+            </div>
+            <div class="card-bottom-input-div">
+                <input type="text" class="form-control info-each-input" id="Contact" style="margin-top:25px;width:64%">
+            </div>
+            <div style="float:left;width:70%;height:80px">
+              <div style="float:left;width:8%;margin-left:70px">
+                <input type="checkbox" id="policy" style="cursor:pointer" class="checkbox-privacy">
+              </div>
+              <div style="float:left;width:80%;margin-top:15px">
+                <p class="p-privacy">I accepted all the privacy and term of use in this website!</p>
+              </div>
+            </div>
+            <div style="float:right;width:20%">
+              <button class="button-sign-up" onclick="success_sign_up()">Sign up</button>
+            </div>
+        <!--</div>-->
+    </div>
+    </div>
+  </div>
+    <footer>
+  <div class="container-fluid" id="contact">
+    <div class="row">
+      <div class="col col-md-3 col-lg-3 col-12 order-1">
+          <div style="display: flex; align-items:center; justify-content: center">
+            <img src="images/brand-logo.png" alt="" style="width: 250px; height: 200px"/>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-2">
+          <div class="footer-text">
+              <h3 class="footer_title">ABOUT US</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Team</a>
+                <a class="nav-link" href="thelink">Course</a>
+                <a class="nav-link" href="thelink">Email</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-3">
+          <div class="footer-text">
+              <h3 class="footer_title">PRODUCT</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Terms of service</a>
+                <a class="nav-link" href="thelink">Privacy</a>
+                <a class="nav-link" href="thelink">Cookie Policy</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-4">
+          <div class="footer-text">
+              <h3 class="footer_title">CONTACT</h3>
+              <div class="footer-icon">
+                <a href="https://facebook.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf082;</i>
+                </a>
+                <a href="https://instagram.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf16d;</i>
+                </a>
+                <a href="https://twitter.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf099;</i>
+                </a>
+              </div>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <div class="g-signin2" style="display:none;"></div>
+</body>
+</html>

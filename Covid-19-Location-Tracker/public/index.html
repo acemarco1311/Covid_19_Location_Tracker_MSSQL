@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html  lang='en'>
+<head>
+  <title>COVID-19 Tracker Website</title>
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <meta charset="UTF-8">
+  <script src="https://use.fontawesome.com/9f47f376f1.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="/images/icon-task.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
+  <script src="javascripts/page.js" defer></script>
+  
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="634822058489-au87q3693f7olnpnmetj80khjtqkovn4.apps.googleusercontent.com">
+  <!--google login-->
+</head>
+
+<body>
+
+  <!--<div id="loading"></div>-->
+
+  <nav class="navbar  navbar-expand-sm navbar-light bg-light p-2">
+    <!--the navigation bar will be verticall on a small screen, use green backgroun color, small navigation bar-->
+      <a class="navbar-brand" href="https://www.adelaide.edu.au/" >
+        <span><img src="images/brand-logo.png" alt="Logo" style="width:70px; "></span>
+        COVID-19 Contact Tracing Project
+      </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          	<span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto pr-5">
+				<li class="nav-item">
+					<a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#login">Log in</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/sign-up.html">Sign up</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#about">About</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#guideline">Guideline</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href=#contact>Contact</a>
+				</li>
+			</ul>
+        </div>
+  </nav>
+
+  <div class="home">
+  <!--this div contain image on the left and information on the right-->
+      <div class="row function" id="main">
+        <div class="col col-md-5 col-lg-5 col-12 order-1">
+            <div class="lefside" id="show-image">
+              <img src="images/coronavirus.png" alt="" width="600" height="400"/>
+            </div>
+        </div>
+        <div class="col col-md-7 col-lg-7 col-12 order-2">
+            <div class="information">
+              <h1>Stay safe from Corona virus by keeping track of your locations!</h1>
+            </div>
+            	<section class="h-100">
+            		<div class="container h-100" style="margin-top: 50px; ">
+            			<div class="row justify-content-md-center h-100" >
+            				<div class="card-wrapper">
+            					<div class="card fat">
+            						<div class="card-body">
+            							<h3 class="card-title" id="login">Login</h3>
+            							<form id='target' action="/login" method="POST" class="my-login-validation" novalidate="">
+            								<div class="form-group">
+            									<label for="userID">User ID: </label>
+            									<input id="userID" type="text" class="form-control" name="userID" value="" required autofocus>
+            									<div class="invalid-feedback">
+            										User ID is invalid
+            									</div>
+            								</div>
+
+            								<div class="form-group">
+            									<label for="password">Password
+            									</label>
+            									 <a href="reset-password.html" style="float: right">
+            											Forgot Password?
+            									 </a>
+            									<input id="password" type="password" class="form-control" name="password" required data-eye>
+            								    <div class="invalid-feedback">
+            								    	Password is required
+            							    	</div>
+            								</div>
+
+            								<div class="form-group">
+            									<div class="custom-checkbox custom-control">
+            										<input type="checkbox" name="remember" id="remember" class="custom-control-input">
+            										<label for="remember" class="custom-control-label">Remember Me</label>
+            									</div>
+            								</div>
+
+            								<div class="form-group m-0">
+            									<button type="submit" class="btn btn-primary btn-block">
+            										Login
+            									</button>
+            								</div>
+            								<div class="g-signin2" data-onsuccess="onSignIn"></div>
+            								<!--<div class="fb-login-button" data-width="36" data-size="small" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false"></div>-->
+            								<div class="mt-4 text-center">
+            									Don't have an account? <a href="sign-up.html">Create One</a>
+            								</div>
+
+            							</form>
+            						</div>
+            					</div>
+            				</div>
+            			</div>
+            		</div>
+            	</section>
+        </div>
+      </div>
+  </div>
+
+  <div class="container-fluid" id="about">
+      <div class="intro">
+        <h1>What is this website about?</h1>
+      </div>
+      <div class="row function">
+        <div class="col col-md-5 col-lg-5 col-12 order-1">
+          <img src="images/community.png" alt="" style="width: 80%; height: 80%"/>
+        </div>
+        <div class="col col-md-7 col-lg-7 col-12 order-2">
+            <h2 style="text-align:center">Our mission</h2>
+            <div class="mission">
+              <p>The COVID-19 pandemic, also known as the coronavirus pandemic, is an ongoing global pandemic of coronavirus disease 2019 (COVID-19) caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). The virus was first identified in December 2019 in Wuhan, China.
+              <br>
+              <br>
+              We created this website to help you to keep track of visited location. You can see
+              the current hotspots in the map to avoid the areas that are dangerous. Furthermore,
+              you can keep track of the visited locations by entering the longitude and latitude
+              of the location, therefore, you can check whether you have been to a hotspot!
+              <br>
+              <br>
+              <span style="font-weight: bold">
+                SIGN UP AND JOIN WITH US TO PROTECT THE COMMUNITY!
+              </span>
+              </p>
+            </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="container-fluid" id="guideline">
+      <div class="intro">
+        <h1>How to use this website</h1>
+      </div>
+      <div class="row function">
+          <div class="guide_image_div col col-md-3 col-lg-3 col-12 order-1" >
+                <img src="images/login.png" alt="" style="width: 200px; height: 200px"/>
+              <div class="guideline_text">
+                <p>Log in by your account</p>
+              </div>
+          </div>
+          <div class="guide_image_div col col-md-3 col-lg-3 col-12 order-2">
+              <img src="images/checkin.png" alt="" style="width: 200px; height: 200px"/>
+              <div class="guideline_text">
+                <p>Check-in locations by entering check-in code or GPS</p>
+              </div>
+          </div>
+          <div class="guide_image_div col col-md-3 col-lg-3 col-12 order-3">
+             <img src="images/seemap.png" alt="" style="width: 350px; height: 200px"/>
+              <div class="guideline_text">
+                <p>See your locations in the map with hotspots</p>
+              </div>
+          </div>
+          <div class="guide_image_div col col-md-3 col-lg-3 col-12 order-4">
+              <img src="images/alert.jpg" alt="" style="width: 300px; height: 200px"/>
+              <div class="guideline_text">
+                <p>Check if you have been to a hotspot</p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+<footer>
+  <div class="container-fluid" id="contact">
+    <div class="row">
+      <div class="col col-md-3 col-lg-3 col-12 order-1">
+          <div style="display: flex; align-items:center; justify-content: center">
+            <img src="images/brand-logo.png" alt="" style="width: 250px; height: 200px"/>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-2">
+          <div class="footer-text">
+              <h3 class="footer_title">ABOUT US</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Team</a>
+                <a class="nav-link" href="thelink">Course</a>
+                <a class="nav-link" href="thelink">Email</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-3">
+          <div class="footer-text">
+              <h3 class="footer_title">PRODUCT</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Terms of service</a>
+                <a class="nav-link" href="thelink">Privacy</a>
+                <a class="nav-link" href="thelink">Cookie Policy</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-4">
+          <div class="footer-text">
+              <h3 class="footer_title">CONTACT</h3>
+              <div class="footer-icon">
+                <a href="https://facebook.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf082;</i>
+                </a>
+                <a href="https://instagram.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf16d;</i>
+                </a>
+                <a href="https://twitter.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf099;</i>
+                </a>
+              </div>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNYvzy_Wcuk-z1KH0O4kGYDHWuMuDJLKU&callback=initMap">
+</script>
+</body>
+</html>

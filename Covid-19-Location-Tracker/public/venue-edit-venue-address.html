@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html  lang='en'>
+<head>
+    <title>COVID-19 Tracker Website</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <meta charset="UTF-8">
+    <script src="https://use.fontawesome.com/9f47f376f1.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/images/icon-task.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
+    <script src="javascripts/page.js" defer></script>
+    
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="634822058489-au87q3693f7olnpnmetj80khjtqkovn4.apps.googleusercontent.com">
+    <!--google login-->
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+        <a class="navbar-brand" href="https://www.adelaide.edu.au/">
+            <span><img src="images/brand-logo.png" alt="Logo" style="width:70px;">
+            COVID-19 Contact Tracing Project
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       	<span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto pr-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="/venue-home-page.html">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/venue-check-in-history.html">Check-in History</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Venue</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="/venue-manage.html">Edit account information</a>
+                      <a class="dropdown-item" href="/venue-manage.html#changePassword">Change password</a>
+                      <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="javascript:void(0)" onclick="logout();">Log out</a>
+                      </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+<h2 style="text-align: center; margin-top: 50px">Edit information</h2>
+    <form action='/users/getVenueUserInfo' method='GET'>
+        <div class="card-body align-items-center d-flex justify-content-center">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+	    <div class="card-body">
+		<div class="row gutters">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<h5 class="personal-class">Personal Details</h5>
+	  </div>
+
+	<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+     <div class="form-group">
+          <label class="lable-form">Venue Name: </label>
+          <span id="edit-venueName" class="venue_name"></span>
+      </div>
+  </div>
+
+  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+      <div class="form-group">
+          <label class="lable-form">Contact Number: </label>
+          <span id="edit-contactNo"></span>
+      </div>
+  </div>
+
+  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+      <div class="form-group">
+          <label class="lable-form">Email Address: </label>
+          <span id="edit-emailAddress"></span>
+      </div>
+  </div>
+  </div>
+
+<div class="row gutters">
+		 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="text-right">
+					<button type="button" class="user-button user-button-edit" onclick="window.location.href='/venue-edit-venue-userInfo.html';">Edit</button>
+				</div>
+			</div>
+	</div>
+
+	<hr>
+
+
+   <div class="row gutters">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <h5 class="address-class">Address</h5>
+			</div>
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="form-group">
+          <label for="edit-streetNumber">Street Number:</label><br>
+          <input class="form-control" type="text" id="edit-streetNumber" placeholder="Enter your street number" value="" required>
+      </div>
+      </div>
+
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="form-group">
+          <label for="edit-streetName">Street Name:</label><br>
+          <input class="form-control" type="text" id="edit-streetName" placeholder="Enter your steet name" value="" required>
+      </div>
+      </div>
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="form-group">
+          <label for="edit-city">City/Suburb:</label><br>
+          <input class="form-control" type="text" id="edit-city" placeholder="Enter your city name" value="" required>
+      </div>
+      </div>
+
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="form-group">
+          <label for="edit-state">State:</label><br>
+          <input class="form-control" type="text" id="edit-state" placeholder="Enter your state name" value="" required>
+      </div>
+      </div>
+
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+        <div class="form-group">
+          <label for="edit-country">Country:</label><br>
+          <input class="form-control" type="text" id="edit-country" placeholder="Enter your country name" value="" required>
+      </div>
+      </div>
+      </div>
+
+      <pre id="test"></pre>
+<div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="text-right">
+          <button type="button" class=" user-button user-button-cancel" onclick="window.location.href='/venue-manage.html';">Cancel</button>
+          <button type="button"  class="user-button user-button-edit" onclick="uploadVenueAddress()">Update</button>
+					<!--<a class="showhref" href="/venue-manage.html"><button type="button" class=" user-button user-button-cancel" onclick="showVenueUserInfo()">Cancel</button></a>-->
+					<!--<a class="showhref"href="/venue-manage.html"><button type="button"  class="user-button user-button-edit" onclick="uploadVenueAddress()">Update</button></a>-->
+				</div>
+			</div>
+		</div>
+
+<hr>
+
+    <div class="row gutters">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<h5 class="security">Security</h5>
+		</div>
+
+		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" id="changePassword">
+        <div class="form-group">
+          <label>Password:</label>
+          <div id="change-password" style="display:none">
+            <input class="form-control" type="password" id="edit-password" value="" placeholder="new password">
+            <input type="checkbox" onclick="toggle()">Show Password
+            <input class="form-control" type="password" style="margin-top:10px" id="edit-repeat-password" value="" placeholder="repeat password">
+
+            <br>
+            <button type="button" class="user-button user-button-cancel" onclick="setPassword()">Cancel</button>
+  					<button type="button" class="user-button user-button-edit" onclick="uploadPassword()">Save</button>
+					</div>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="row gutters" id="change-password-button">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="text-right">
+	     	 <button type="button" name="edit" class="user-button user-button-edit" onclick="setPassword()">Change</button>
+				</div>
+			</div>
+		</div>
+
+</div>
+</div>
+</div>
+</div>
+</form>
+
+
+<footer>
+  <div class="container-fluid" id="contact">
+    <div class="row">
+      <div class="col col-md-3 col-lg-3 col-12 order-1">
+          <div style="display: flex; align-items:center; justify-content: center">
+            <img src="images/brand-logo.png" alt="" style="width: 250px; height: 200px"/>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-2">
+          <div class="footer-text">
+              <h3 class="footer_title">ABOUT US</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Team</a>
+                <a class="nav-link" href="thelink">Course</a>
+                <a class="nav-link" href="thelink">Email</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-3">
+          <div class="footer-text">
+              <h3 class="footer_title">PRODUCT</h3>
+              <nav class="nav flex-column">
+                <a class="nav-link" href="thelink">Terms of service</a>
+                <a class="nav-link" href="thelink">Privacy</a>
+                <a class="nav-link" href="thelink">Cookie Policy</a>
+              </nav>
+          </div>
+      </div>
+      <div class="col col-md-3 col-lg-3 col-12 order-4">
+          <div class="footer-text">
+              <h3 class="footer_title">CONTACT</h3>
+              <div class="footer-icon">
+                <a href="https://facebook.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf082;</i>
+                </a>
+                <a href="https://instagram.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf16d;</i>
+                </a>
+                <a href="https://twitter.com" style="color:white">
+                  <i style="font-size:70px" class="fa">&#xf099;</i>
+                </a>
+              </div>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <div class="g-signin2" style="display:none;"></div>
+</body>
+
+</html>
+
