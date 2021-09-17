@@ -48,7 +48,7 @@ What if the user visit a venue that is not in our database?
 - MySQL for backend (relational database): see the database_info to check the database schema. 
 
 # Files that you need to care: 
-These are all the files that you might need to care, others are just configuration files. (installation listed below)
+These are all the files that you might need to care, others are just configuration files. (installation listed below). In folder Covid-19-Location-Tracker
 
     - stylesheet/style.css: css file for design web page
     - All HTML file in /public: the webpages
