@@ -1,0 +1,95 @@
+CREATE TABLE Addresses(
+	addressID int NOT NULL IDENTITY(1,1),
+	number int DEFAULT NULL,
+	streetName varchar(20) DEFAULT NULL,
+	city varchar(20) DEFAULT NULL,
+	stateName varchar(20) DEFAULT NULL, 
+	country varchar(20) DEFAULT NULL,
+	CONSTRAINT addressPk PRIMARY KEY(addressID),
+	CONSTRAINT uniqueAddressID UNIQUE(addressID),
+);
+
+CREATE TABLE Accounts(
+	userID varchar(50) NOT NULL,
+	passwordHash varchar(256) DEFAULT NULL,
+	accountType int NOT NULL DEFAULT 0,
+	addressID int NOT NULL,
+	emailAddress varchar(100) NOT NULL DEFAULT '',
+	contact varchar(50) DEFAULT NULL,
+	CONSTRAINT accountPk PRIMARY KEY(userID),
+	CONSTRAINT uniqueAccount UNIQUE(userID),
+	CONSTRAINT uniqueEmail UNIQUE(emailAddress),
+	CONSTRAINT uniqueUserID UNIQUE(userID),
+	CONSTRAINT addressFk FOREIGN KEY(addressID) REFERENCES Addresses(addressID)
+	ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE AdminInfo(
+	userID varchar(50) NOT NULL,
+	officialName varchar(50),
+	CONSTRAINT adminPk PRIMARY KEY(userID),
+	CONSTRAINT admindFk FOREIGN KEY(userID) REFERENCES Accounts(userID) 
+	ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE UserInfo(
+	userID varchar(50) NOT NULL,
+	firstName varchar(20) DEFAULT NULL,
+	lastName varchar(20) DEFAULT NULL,
+	CONSTRAINT userInfoPk PRIMARY KEY(userID),
+	CONSTRAINT userInfoFk FOREIGN KEY(userID) REFERENCES Accounts(userID)
+	ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE Hotspots(
+	hotspotID int NOT NULL IDENTITY(1,1),
+	latitude decimal(10, 7) NOT NULL DEFAULT 0.0000000,
+	longitude decimal(10, 7) NOT NULL DEFAULT 0.0000000,
+	dateAdded date DEFAULT NULL, 
+	confirmedCases int DEFAULT NULL,
+	deaths int DEFAULT NULL,
+	recoveredCases int DEFAULT NULL,
+	activeCases int DEFAULT 0,
+	CONSTRAINT hotspotPk PRIMARY KEY(hotspotID),
+	CONSTRAINT uniqueHotspot UNIQUE(hotspotID),
+	CONSTRAINT checkValidLat CHECK ( (latitude >= (-90)) AND (latitude <= 90) ),
+	CONSTRAINT checkValidLng CHECK ( (longitude >= (-180)) AND (longitude <= 180) )
+);
+
+CREATE TABLE CheckInCodeRecords(
+	checkInCode char(6) NOT NULL DEFAULT '000000',
+	latitude decimal(10, 7) NOT NULL DEFAULT 0.0000000,
+	longitude decimal(10, 7) NOT NULL DEFAULT 0.0000000,
+	CONSTRAINT checkInCodePk PRIMARY KEY(checkInCode),
+	CONSTRAINT uniqueCheckInCode UNIQUE(checkInCode),
+	CONSTRAINT checkValidLatLocation CHECK ( (latitude >= (-90)) AND (latitude <= 90)),
+	CONSTRAINT checkValidLngLocation CHECK ( (longitude >= (-180)) AND (longitude <= 180))
+);
+
+CREATE TABLE CheckInRecords(
+	checkInID int NOT NULL IDENTITY(1,1),
+	userID varchar(50) NOT NULL,
+	latitude decimal(10,7) DEFAULT NULL,
+	longitude decimal(10,7) DEFAULT NULL,
+	dateAdded datetime DEFAULT NULL,
+	checkInCode char(6) DEFAULT NULL,
+	CONSTRAINT checkInIDPk PRIMARY KEY(checkInID),
+	CONSTRAINT checkInUserFk FOREIGN KEY(userID) REFERENCES Accounts(userID) 
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT checkInCodeFk FOREIGN KEY(checkInCode) REFERENCES CheckInCodeRecords(checkInCode)
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT checkLat CHECK ( (latitude >= (-90)) AND (latitude <= 90)),
+	CONSTRAINT checkLng CHECK ( (longitude >= (-180)) AND (longitude <= 180)),
+);
+
+CREATE TABLE VenueInfo(
+	userID varchar(50) NOT NULL,
+	venueName varchar(100) DEFAULT NULL,
+	checkInCode char(6) NOT NULL,
+	CONSTRAINT venueUserPk PRIMARY KEY(userID),
+	CONSTRAINT venueUserFk FOREIGN KEY(userID) REFERENCES Accounts(userID) 
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT venueCheckInCodeFk FOREIGN KEY(checkInCode) REFERENCES CheckInCodeRecords(checkInCode)
+	ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT uniqueVenueCheckInCode UNIQUE(checkInCode),
+);
